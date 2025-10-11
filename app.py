@@ -70,6 +70,22 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def create_gradient_header(title, icon="📊", subtitle=None):
+    """Create a consistent gradient header for sections."""
+    subtitle_html = f'<p style="margin: 0; font-size: 14px; color: rgba(255,255,255,0.8);">{subtitle}</p>' if subtitle else ""
+    
+    return f"""
+    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
+        <div style='display: flex; align-items: center; margin-bottom: 8px;'>
+            <div style='background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; margin-right: 12px;'>
+                <span style='font-size: 20px;'>{icon}</span>
+            </div>
+            <h3 style='margin: 0; color: white; font-weight: 600; font-size: 22px;'>{title}</h3>
+        </div>
+        {subtitle_html}
+    </div>
+    """
+
 def main():
     # Header
     st.markdown('<h1 class="main-header">🤖 Enhanced Investment Research Agent</h1>', unsafe_allow_html=True)
@@ -371,7 +387,7 @@ def display_welcome():
     
     # Main welcome card
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; color: white;">
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
         <h2 style="margin: 0 0 15px 0; text-align: center;">🤖 Enhanced Investment Research Agent</h2>
         <p style="margin: 0; text-align: center; font-size: 18px; opacity: 0.9;">
             Autonomous financial analysis powered by AI agents and advanced visualizations
@@ -486,7 +502,7 @@ def display_results():
     
     # Header with symbol and timestamp
     st.markdown(f"""
-    <div style='background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
+    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
         <div style='display: flex; align-items: center; margin-bottom: 8px;'>
             <div style='background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; margin-right: 12px;'>
                 <span style='font-size: 20px;'>📈</span>
@@ -659,7 +675,7 @@ def display_sentiment_dashboard(processed_items, analysis):
         st.warning("No sentiment data available.")
         return
     
-    st.subheader("📊 Comprehensive Sentiment Analysis Dashboard")
+    st.markdown(create_gradient_header("📊 Comprehensive Sentiment Analysis Dashboard", "📊", "Detailed sentiment analysis across all news articles"), unsafe_allow_html=True)
     
     # Prepare comprehensive sentiment data
     sentiment_data = []
@@ -774,7 +790,7 @@ def display_sentiment_dashboard(processed_items, analysis):
 def display_financial_metrics(results):
     """Display financial metrics and analysis."""
     
-    st.subheader("💰 Financial Metrics Dashboard")
+    st.markdown(create_gradient_header("💰 Financial Metrics Dashboard", "💰", "Key financial indicators and performance metrics"), unsafe_allow_html=True)
     
     # Extract financial data
     evidence = results.get('evidence', {})
@@ -938,7 +954,7 @@ def display_news_analysis_visual(processed_items):
         st.warning("No news analysis results available.")
         return
     
-    st.subheader("📰 News Analysis Dashboard")
+    st.markdown(create_gradient_header("📰 News Analysis Dashboard", "📰", "Comprehensive news analysis and insights"), unsafe_allow_html=True)
     
     # News overview metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -1053,7 +1069,7 @@ def display_news_analysis_visual(processed_items):
 def display_workflow_progress(results):
     """Display workflow progress with visual indicators."""
     
-    st.subheader("🔄 Autonomous Workflow Progress")
+    st.markdown(create_gradient_header("🔄 Autonomous Workflow Progress", "🔄", "5-phase autonomous analysis workflow status"), unsafe_allow_html=True)
     
     # Workflow phases with visual progress
     phases = [
@@ -1278,7 +1294,7 @@ def display_workflow_progress(results):
 
 def display_workflow_details(results):
     """Display detailed autonomous workflow information."""
-    st.subheader("🔄 Autonomous Workflow Details")
+    st.markdown(create_gradient_header("🔄 Autonomous Workflow Details", "🔄", "Detailed workflow execution information"), unsafe_allow_html=True)
     
     # Analysis Scope
     analysis_scope = results.get("analysis_scope", {})
@@ -1466,7 +1482,7 @@ def display_key_findings(analysis):
         return
     
     # Display summary
-    st.subheader("📊 Analysis Summary")
+    st.markdown(create_gradient_header("📊 Analysis Summary", "📊", "Comprehensive analysis overview"), unsafe_allow_html=True)
     st.write(analysis.get('summary', 'No summary available'))
     
     # Key findings
@@ -1503,7 +1519,7 @@ def display_visualizations(processed_items):
         return
     
     # Sentiment-based visualizations section
-    st.subheader("🎭 Sentiment-Based Article Visualization")
+    st.markdown(create_gradient_header("🎭 Sentiment-Based Article Visualization", "🎭", "Interactive sentiment analysis and visualization"), unsafe_allow_html=True)
     
     # Prepare sentiment data
     sentiment_data = []
@@ -1721,7 +1737,7 @@ def display_visualizations(processed_items):
 def display_detailed_results(results):
     """Display detailed analysis results."""
     
-    st.subheader("🔍 Detailed Analysis Results")
+    st.markdown(create_gradient_header("🔍 Detailed Analysis Results", "🔍", "Comprehensive analysis breakdown"), unsafe_allow_html=True)
     
     # Evaluation results
     eval_results = results.get('evaluation', {})
@@ -1816,7 +1832,7 @@ def safe_json_serialize(obj):
 def display_raw_data(results):
     """Display raw data from the analysis."""
     
-    st.subheader("📋 Raw Analysis Data")
+    st.markdown(create_gradient_header("📋 Raw Analysis Data", "📋", "Complete analysis data in JSON format"), unsafe_allow_html=True)
     
     try:
         # Safely serialize results for display
