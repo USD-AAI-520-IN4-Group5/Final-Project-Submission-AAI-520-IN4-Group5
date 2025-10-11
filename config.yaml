@@ -87,8 +87,8 @@ analysis:
 
 api:
   # API configuration
-  news_api_key: f8d9c4dbbb514174bb84682315ae9fa7
-  openai_api_key: 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
-  huggingface_token: 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
+  news_api_key: ""  # Add your News API key here
+  openai_api_key: ""  # Add your OpenAI API key here
+  huggingface_token: ""  # Add your Hugging Face token here
   request_timeout: 30
   max_retries: 3

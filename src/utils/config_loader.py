@@ -153,12 +153,12 @@ class ConfigLoader:
     
     def get_news_api_key(self) -> str:
         """Get News API key."""
-        return self.get_api_config().get('news_api_key', "f8d9c4dbbb514174bb84682315ae9fa7")
+        return self.get_api_config().get('news_api_key', "")
     
     def get_openai_api_key(self) -> str:
         """Get OpenAI API key."""
-        return self.get_api_config().get('openai_api_key', "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")
+        return self.get_api_config().get('openai_api_key', "")
     
     def get_huggingface_token(self) -> str:
         """Get Hugging Face token."""
-        return self.get_api_config().get('huggingface_token', "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")
+        return self.get_api_config().get('huggingface_token', "")

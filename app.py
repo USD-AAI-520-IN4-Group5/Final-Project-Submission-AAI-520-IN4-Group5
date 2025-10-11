@@ -135,7 +135,7 @@ def main():
         st.subheader("API Configuration")
         api_key = st.text_input(
             "News API Key",
-            value="f8d9c4dbbb514174bb84682315ae9fa7",
+            value="",
             type="password",
             help="Your News API key"
         )
@@ -161,6 +161,11 @@ def main():
         
         # Run analysis button
         if st.button("🚀 Run Analysis", type="primary"):
+            # Validate required API key
+            if not api_key:
+                st.error("❌ News API Key is required to fetch financial news. Please enter your API key.")
+                st.stop()
+            
             # Create configuration with user settings
             config_data = {
                 'news_filtering': {
@@ -183,7 +188,9 @@ def main():
                     'confidence_threshold': 0.5
                 },
                 'api': {
-                    'news_api_key': api_key
+                    'news_api_key': api_key,
+                    'openai_api_key': openai_api_key,
+                    'huggingface_token': huggingface_token
                 }
             }
             
@@ -220,7 +227,9 @@ def main():
                 'confidence_threshold': 0.5
             },
             'api': {
-                'news_api_key': api_key
+                'news_api_key': api_key,
+                'openai_api_key': openai_api_key,
+                'huggingface_token': huggingface_token
             }
         }
         
@@ -261,6 +270,18 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         
         # Create configuration loader with user settings
         if config_data:
+            # Add user-provided API keys to config_data
+            if 'api' not in config_data:
+                config_data['api'] = {}
+            
+            # Override with user-provided API keys
+            if api_key:
+                config_data['api']['news_api_key'] = api_key
+            if openai_api_key:
+                config_data['api']['openai_api_key'] = openai_api_key
+            if huggingface_token:
+                config_data['api']['huggingface_token'] = huggingface_token
+            
             # Create a temporary config file with user settings
             import tempfile
             import yaml
@@ -271,7 +292,23 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
             
             config = ConfigLoader(temp_config_path)
         else:
-            config = ConfigLoader()
+            # Create config with user-provided API keys
+            config_data = {
+                'api': {
+                    'news_api_key': api_key or "",
+                    'openai_api_key': openai_api_key or "",
+                    'huggingface_token': huggingface_token or ""
+                }
+            }
+            
+            import tempfile
+            import yaml
+            
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+                yaml.dump(config_data, f)
+                temp_config_path = f.name
+            
+            config = ConfigLoader(temp_config_path)
         
         agent = EnhancedInvestmentAgent(symbol=symbol, max_iterations=max_iterations, config=config, openai_api_key=openai_api_key, improvement_focus=improvement_focus, selected_improvements=selected_improvements)
         

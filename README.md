@@ -100,6 +100,14 @@ The investment research agent follows a structured workflow:
 2. **OpenAI API** (Optional): For advanced LLM-based analysis
 3. **Hugging Face Token** (Optional): For transformer model access
 
+### Setting Up API Keys
+
+**Option 1: Through the Web Interface (Recommended)**
+1. Run the Streamlit app: `streamlit run app.py`
+2. Enter your API keys in the "API Configuration" section
+3. The keys will be used for that session only
+
+**Option 2: Through Configuration File**
 Update `config.yaml` with your API keys:
 ```yaml
 api:
