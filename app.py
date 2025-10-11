@@ -338,6 +338,21 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         # Run the enhanced agent analysis
         results = agent.act()
         
+        # Debug: Check if results are empty or have errors
+        if not results or results.get('error'):
+            st.error(f"❌ Analysis failed: {results.get('error', 'Unknown error')}")
+            st.stop()
+        
+        # Debug: Check if we have basic data
+        if not results.get('processed_items') and not results.get('evidence'):
+            st.warning("⚠️ No data retrieved. Please check your API key and try again.")
+            st.stop()
+        
+        # Debug: Show data summary
+        processed_count = len(results.get('processed_items', []))
+        evidence_keys = list(results.get('evidence', {}).keys())
+        st.info(f"📊 Retrieved {processed_count} processed items and evidence: {', '.join(evidence_keys)}")
+        
         # Step 4: Process results
         status_text.text("📊 Processing results...")
         progress_bar.progress(90)
