@@ -77,9 +77,7 @@ def create_gradient_header(title, icon="📊", subtitle=None):
     return f"""
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
         <div style='display: flex; align-items: center; margin-bottom: 8px;'>
-            <div style='background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; margin-right: 12px;'>
-                <span style='font-size: 20px;'>{icon}</span>
-            </div>
+            <span style='font-size: 20px; margin-right: 12px;'>{icon}</span>
             <h3 style='margin: 0; color: white; font-weight: 600; font-size: 22px;'>{title}</h3>
         </div>
         {subtitle_html}
@@ -94,9 +92,7 @@ def main():
     st.markdown("""
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
         <div style='display: flex; align-items: center; margin-bottom: 10px;'>
-            <div style='background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; margin-right: 12px;'>
-                <span style='font-size: 20px;'>🔄</span>
-            </div>
+            <span style='font-size: 20px; margin-right: 12px;'>🔄</span>
             <h3 style='margin: 0; color: white; font-weight: 600; font-size: 22px;'>Autonomous Analysis Workflow</h3>
         </div>
         <p style='margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); line-height: 1.5;'>
@@ -504,9 +500,7 @@ def display_results():
     st.markdown(f"""
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>
         <div style='display: flex; align-items: center; margin-bottom: 8px;'>
-            <div style='background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; margin-right: 12px;'>
-                <span style='font-size: 20px;'>📈</span>
-            </div>
+            <span style='font-size: 20px; margin-right: 12px;'>📈</span>
             <h2 style='margin: 0; color: white; font-weight: 700; font-size: 28px;'>Analysis Results for {symbol}</h2>
         </div>
         <p style='margin: 0; font-size: 14px; color: rgba(255,255,255,0.8);'>
