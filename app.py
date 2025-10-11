@@ -208,50 +208,6 @@ def main():
             
             run_analysis(symbol, max_iterations, news_limit, api_key, config_data, openai_api_key, huggingface_token)
     
-    # Handle improvement triggers
-    if st.session_state.get('trigger_improvement', False):
-        st.markdown("---")
-        st.markdown("### 🔄 Running Improved Analysis")
-        
-        # Get improvement parameters
-        improvement_focus = st.session_state.get('improvement_focus', 'all')
-        selected_improvements = st.session_state.get('selected_improvements', [])
-        
-        # Create configuration with user settings
-        config_data = {
-            'news_filtering': {
-                'enable_finance_filter': enable_finance_filter,
-                'min_finance_relevance': min_relevance,
-                'llm_based_filtering': True,
-                'exclude_keywords': [
-                    'sports', 'entertainment', 'celebrity', 'movie', 'music',
-                    'gaming', 'weather', 'politics', 'election', 'crime',
-                    'accident', 'health', 'medical'
-                ],
-                'preferred_sources': [
-                    'bloomberg', 'reuters', 'wsj', 'financial times', 'cnbc',
-                    'marketwatch', 'yahoo finance', 'seeking alpha', 'benzinga'
-                ]
-            },
-            'analysis': {
-                'max_iterations': max_iterations,
-                'news_limit': news_limit,
-                'confidence_threshold': 0.5
-            },
-            'api': {
-                'news_api_key': api_key,
-                'openai_api_key': openai_api_key,
-                'huggingface_token': huggingface_token
-            }
-        }
-        
-        # Run improved analysis
-        run_analysis(symbol, max_iterations, news_limit, api_key, config_data, openai_api_key, huggingface_token, improvement_focus, selected_improvements)
-        
-        # Clear improvement trigger
-        st.session_state.trigger_improvement = False
-        st.session_state.improvement_focus = None
-        st.session_state.selected_improvements = None
     
     # Main content area
     if 'analysis_results' in st.session_state:
@@ -268,7 +224,7 @@ def main():
         unsafe_allow_html=True
     )
 
-def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, openai_api_key=None, huggingface_token=None, improvement_focus=None, selected_improvements=None):
+def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, openai_api_key=None, huggingface_token=None):
     """Run the financial analysis for the given symbol with optional improvements."""
     
     # Create progress indicators
@@ -322,7 +278,7 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
             
             config = ConfigLoader(temp_config_path)
         
-        agent = EnhancedInvestmentAgent(symbol=symbol, max_iterations=max_iterations, config=config, openai_api_key=openai_api_key, improvement_focus=improvement_focus, selected_improvements=selected_improvements)
+        agent = EnhancedInvestmentAgent(symbol=symbol, max_iterations=max_iterations, config=config, openai_api_key=openai_api_key)
         
         # Step 2: Fetch data
         status_text.text("📊 Fetching stock data and news...")
@@ -1245,61 +1201,6 @@ def display_workflow_progress(results):
                 })
                 st.dataframe(improvement_df, use_container_width=True)
         
-        # Improvement Trigger Section
-        if improvements:
-            st.markdown("---")
-            st.markdown("### 🔄 Trigger Improved Analysis")
-            
-            st.markdown("""
-            <div style="background-color: #e8f4fd; padding: 15px; border-radius: 10px; border-left: 4px solid #2196f3; margin: 10px 0;">
-                <h4 style="margin: 0 0 10px 0; color: #1976d2;">💡 Continuous Improvement</h4>
-                <p style="margin: 0; color: #333;">
-                    The agent has identified areas for improvement. You can trigger a new analysis with enhanced parameters 
-                    to address these specific issues and get better results.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            col1, col2, col3 = st.columns(3)
-            
-            with col1:
-                if st.button("🚀 Run Improved Analysis", key="improve_analysis", type="primary"):
-                    st.session_state.trigger_improvement = True
-                    st.session_state.improvement_focus = "all"
-                    st.rerun()
-            
-            with col2:
-                if st.button("📰 Expand News Sources", key="improve_news"):
-                    st.session_state.trigger_improvement = True
-                    st.session_state.improvement_focus = "news_sources"
-                    st.rerun()
-            
-            with col3:
-                if st.button("⏰ Extend Time Range", key="improve_time"):
-                    st.session_state.trigger_improvement = True
-                    st.session_state.improvement_focus = "time_range"
-                    st.rerun()
-            
-            # Show improvement options
-            st.markdown("#### 🎯 Improvement Options")
-            
-            improvement_options = st.multiselect(
-                "Select specific improvements to apply:",
-                options=improvements,
-                default=improvements[:2] if len(improvements) >= 2 else improvements,
-                key="improvement_selection"
-            )
-            
-            if improvement_options:
-                st.markdown("**Selected Improvements:**")
-                for option in improvement_options:
-                    st.markdown(f"• {option}")
-                
-                if st.button("🎯 Apply Selected Improvements", key="apply_selected", type="secondary"):
-                    st.session_state.trigger_improvement = True
-                    st.session_state.improvement_focus = "selected"
-                    st.session_state.selected_improvements = improvement_options
-                    st.rerun()
 
 def display_workflow_details(results):
     """Display detailed autonomous workflow information."""
