@@ -1,0 +1,94 @@
+# Financial Agentic AI Configuration
+# Configuration file for controlling news filtering and analysis parameters
+
+news_filtering:
+  # Enable/disable finance-specific filtering
+  enable_finance_filter: true
+
+  # LLM-based filtering (no hardcoded keywords needed)
+  llm_based_filtering: true
+
+  # Keywords to exclude (non-finance related)
+  exclude_keywords:
+    - sports
+    - entertainment
+    - celebrity
+    - movie
+    - music
+    - gaming
+    - weather
+    - politics
+    - election
+    - crime
+    - accident
+    - health
+    - medical
+    - mayor
+    - government
+    - policy
+    - democrat
+    - republican
+    - congress
+    - senate
+    - president
+    - campaign
+    - vote
+    - candidate
+    - party
+    - liberal
+    - conservative
+    - technology # Too broad, keep only if combined with finance terms
+
+  # News sources to prioritize (finance-focused)
+  preferred_sources:
+    - bloomberg
+    - reuters
+    - wsj
+    - financial times
+    - cnbc
+    - marketwatch
+    - yahoo finance
+    - seeking alpha
+    - benzinga
+    - investorplace
+    - fool
+    - zacks
+    - morningstar
+    - barrons
+    - forbes
+
+  # Minimum finance relevance score (0-1)
+  min_finance_relevance: 0.3
+
+  # Enable topic classification filtering
+  enable_topic_filter: true
+
+  # Allowed topics (from text_processing.py)
+  allowed_topics:
+    - EARNINGS
+    - M&A
+    - REGULATORY
+    - PRODUCT
+    - MACRO
+    - CORP_GOV
+
+analysis:
+  # Default analysis parameters
+  max_iterations: 2
+  news_limit: 20
+  confidence_threshold: 0.5
+
+  # Enable/disable specific analysis types
+  enable_earnings_analysis: true
+  enable_news_impact_analysis: true
+  enable_technical_analysis: true
+  enable_regulatory_analysis: true
+  enable_corporate_governance_analysis: true
+
+api:
+  # API configuration
+  news_api_key: f8d9c4dbbb514174bb84682315ae9fa7
+  openai_api_key: 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
+  huggingface_token: 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
+  request_timeout: 30
+  max_retries: 3
