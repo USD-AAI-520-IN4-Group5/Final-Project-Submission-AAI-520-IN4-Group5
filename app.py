@@ -1165,13 +1165,6 @@ def display_workflow_progress(results):
             consistency = evaluation.get("consistency", 0)
             st.metric("Consistency", f"{consistency:.1%}")
         
-        # Quality indicators
-        needs_optimization = evaluation.get("needs_optimization", False)
-        st.markdown(f"""
-        <div style="padding: 10px; border-radius: 5px; background-color: {'#f8d7da' if needs_optimization else '#d4edda'}; border-left: 4px solid {'#dc3545' if needs_optimization else '#28a745'}; color: {'#721c24' if needs_optimization else '#155724'};">
-            <strong>Optimization Status:</strong> {'Needs Optimization' if needs_optimization else 'No Optimization Required'}
-        </div>
-        """, unsafe_allow_html=True)
     
     # Self-reflection insights
     reflection = results.get("reflection", {})
