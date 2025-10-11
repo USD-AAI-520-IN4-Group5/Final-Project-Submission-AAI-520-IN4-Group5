@@ -675,7 +675,7 @@ def display_sentiment_dashboard(processed_items, analysis):
         st.warning("No sentiment data available.")
         return
     
-    st.markdown(create_gradient_header("📊 Comprehensive Sentiment Analysis Dashboard", "📊", "Detailed sentiment analysis across all news articles"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Comprehensive Sentiment Analysis Dashboard", "🎭", "Detailed sentiment analysis across all news articles"), unsafe_allow_html=True)
     
     # Prepare comprehensive sentiment data
     sentiment_data = []
@@ -790,7 +790,7 @@ def display_sentiment_dashboard(processed_items, analysis):
 def display_financial_metrics(results):
     """Display financial metrics and analysis."""
     
-    st.markdown(create_gradient_header("💰 Financial Metrics Dashboard", "💰", "Key financial indicators and performance metrics"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Financial Metrics Dashboard", "💹", "Key financial indicators and performance metrics"), unsafe_allow_html=True)
     
     # Extract financial data
     evidence = results.get('evidence', {})
@@ -954,7 +954,7 @@ def display_news_analysis_visual(processed_items):
         st.warning("No news analysis results available.")
         return
     
-    st.markdown(create_gradient_header("📰 News Analysis Dashboard", "📰", "Comprehensive news analysis and insights"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("News Analysis Dashboard", "📰", "Comprehensive news analysis and insights"), unsafe_allow_html=True)
     
     # News overview metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -1069,7 +1069,7 @@ def display_news_analysis_visual(processed_items):
 def display_workflow_progress(results):
     """Display workflow progress with visual indicators."""
     
-    st.markdown(create_gradient_header("🔄 Autonomous Workflow Progress", "🔄", "5-phase autonomous analysis workflow status"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Autonomous Workflow Progress", "⚙️", "5-phase autonomous analysis workflow status"), unsafe_allow_html=True)
     
     # Workflow phases with visual progress
     phases = [
@@ -1294,7 +1294,7 @@ def display_workflow_progress(results):
 
 def display_workflow_details(results):
     """Display detailed autonomous workflow information."""
-    st.markdown(create_gradient_header("🔄 Autonomous Workflow Details", "🔄", "Detailed workflow execution information"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Autonomous Workflow Details", "🔧", "Detailed workflow execution information"), unsafe_allow_html=True)
     
     # Analysis Scope
     analysis_scope = results.get("analysis_scope", {})
@@ -1482,7 +1482,7 @@ def display_key_findings(analysis):
         return
     
     # Display summary
-    st.markdown(create_gradient_header("📊 Analysis Summary", "📊", "Comprehensive analysis overview"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Analysis Summary", "📋", "Comprehensive analysis overview"), unsafe_allow_html=True)
     st.write(analysis.get('summary', 'No summary available'))
     
     # Key findings
@@ -1519,7 +1519,7 @@ def display_visualizations(processed_items):
         return
     
     # Sentiment-based visualizations section
-    st.markdown(create_gradient_header("🎭 Sentiment-Based Article Visualization", "🎭", "Interactive sentiment analysis and visualization"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Sentiment-Based Article Visualization", "📈", "Interactive sentiment analysis and visualization"), unsafe_allow_html=True)
     
     # Prepare sentiment data
     sentiment_data = []
@@ -1737,7 +1737,7 @@ def display_visualizations(processed_items):
 def display_detailed_results(results):
     """Display detailed analysis results."""
     
-    st.markdown(create_gradient_header("🔍 Detailed Analysis Results", "🔍", "Comprehensive analysis breakdown"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Detailed Analysis Results", "🔍", "Comprehensive analysis breakdown"), unsafe_allow_html=True)
     
     # Evaluation results
     eval_results = results.get('evaluation', {})
@@ -1832,7 +1832,7 @@ def safe_json_serialize(obj):
 def display_raw_data(results):
     """Display raw data from the analysis."""
     
-    st.markdown(create_gradient_header("📋 Raw Analysis Data", "📋", "Complete analysis data in JSON format"), unsafe_allow_html=True)
+    st.markdown(create_gradient_header("Raw Analysis Data", "💾", "Complete analysis data in JSON format"), unsafe_allow_html=True)
     
     try:
         # Safely serialize results for display
