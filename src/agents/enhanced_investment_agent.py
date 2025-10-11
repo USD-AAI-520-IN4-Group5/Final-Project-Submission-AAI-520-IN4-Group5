@@ -523,8 +523,11 @@ class EnhancedInvestmentAgent(BaseAgent):
         """Evaluate the quality of the report."""
         evaluation = {
             "score": 0.0,
+            "completeness": 0.0,
+            "consistency": 0.0,
             "criteria": {},
-            "recommendations": []
+            "recommendations": [],
+            "needs_optimization": False
         }
         
         try:
@@ -544,12 +547,28 @@ class EnhancedInvestmentAgent(BaseAgent):
             confidence_score = analysis.get("confidence", 0.0)
             evaluation["criteria"]["confidence"] = confidence_score
             
+            # Calculate completeness (based on data availability and analysis depth)
+            completeness_score = (evidence_score * 0.5 + signal_score * 0.3 + confidence_score * 0.2)
+            evaluation["completeness"] = completeness_score
+            
+            # Calculate consistency (based on signal coherence and analysis quality)
+            consistency_score = min(1.0, confidence_score * 0.7 + signal_score * 0.3)
+            evaluation["consistency"] = consistency_score
+            
             # Overall score
             evaluation["score"] = (evidence_score * 0.4 + signal_score * 0.3 + confidence_score * 0.3)
             
+            # Determine if optimization is needed
+            evaluation["needs_optimization"] = (
+                evidence_count < 5 or 
+                signal_count < 3 or 
+                confidence_score < 0.5 or
+                evaluation["score"] < 0.6
+            )
+            
             # Recommendations
             if evidence_count < 5:
-                evaluation["recommendations"].append("Increase news coverage for better analysis")
+                evaluation["recommendations"].append("Expand news sources and time range")
             if signal_count < 3:
                 evaluation["recommendations"].append("Enhance signal detection algorithms")
             if confidence_score < 0.5:
