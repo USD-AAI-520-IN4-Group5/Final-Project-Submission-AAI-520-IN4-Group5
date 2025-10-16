@@ -292,7 +292,7 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         progress_bar.progress(60)
         
         # Run the enhanced agent analysis
-        results = agent.act()
+        results, key_findings = agent.act()
         
         # Debug: Check if results are empty or have errors
         if not results or results.get('error'):
@@ -314,6 +314,7 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         progress_bar.progress(90)
         
         # Store results in session state
+        st.session_state.key_findings = key_findings
         st.session_state.analysis_results = results
         st.session_state.symbol = symbol
         st.session_state.analysis_time = datetime.now()
@@ -515,7 +516,8 @@ def display_main_dashboard(results, symbol):
     evaluation = results.get('evaluation', {})
     processed_items = results.get('processed_items', [])
     signals = results.get('signals', {})
-    
+    key_finding=st.session_state.key_findings
+
     # Main KPI Row
     st.markdown("### 🎯 Key Performance Indicators")
     
@@ -580,6 +582,31 @@ def display_main_dashboard(results, symbol):
         </p>
     </div>
     """, unsafe_allow_html=True)
+
+    df = pd.DataFrame(key_finding)
+
+    with st.expander("Click Here to View Rationale"):
+        #rationale = analysis.get('summary', "No rationale provided.")
+        st.markdown(f"""
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 10px; color: #333;">
+            <h4 style="margin-bottom: 10px;">Detected Signals</h4>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <style>
+        .dataframe-container {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(df, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     
     # Quick Sentiment Overview Chart
     if processed_items:
