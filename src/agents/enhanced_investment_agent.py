@@ -230,7 +230,7 @@ class EnhancedInvestmentAgent(BaseAgent):
             
             # Phase 3: Synthesis and Report Generation
             logger.info("🧠 Phase 3: Generating analysis...")
-            analysis, key_findings = self._generate_analysis(processed_items, signals)
+            analysis = self._generate_analysis(processed_items, signals)
             report["analysis"] = analysis
             
             logger.info("📄 Phase 3: Compiling research report...")
@@ -266,7 +266,7 @@ class EnhancedInvestmentAgent(BaseAgent):
             self._save_report(report)
             
             logger.info(f"✅ Autonomous Enhanced analysis completed for {self.symbol}")
-            return report, key_findings
+            return report
             
         except Exception as e:
             logger.error(f"❌ Critical error during autonomous analysis for {self.symbol}: {e}", exc_info=True)
@@ -379,8 +379,7 @@ class EnhancedInvestmentAgent(BaseAgent):
             # Earnings analysis
             if "EARNINGS" in topic_groups:
                 logger.info("💰 Routing to EarningsAgent...")
-                signals["earnings"] = self.earnings_agent.analyze_earnings_content(
-                    topic_groups["EARNINGS"], 
+                signals["earnings"] = self.earnings_agent.analyze(
                     evidence.get("financials", [])
                 )
                 logger.info(f"✅ EarningsAgent completed: {len(signals['earnings'])} signals")
@@ -517,7 +516,7 @@ class EnhancedInvestmentAgent(BaseAgent):
             logger.error(f"Error generating analysis: {e}")
             analysis["error"] = str(e)
         
-        return analysis, key_findings
+        return analysis
     
     def _evaluate_report(self, report: Dict[str, Any]) -> Dict[str, Any]:
         """Evaluate the quality of the report."""

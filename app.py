@@ -292,7 +292,7 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         progress_bar.progress(60)
         
         # Run the enhanced agent analysis
-        results, key_findings = agent.act()
+        results = agent.act()
         
         # Debug: Check if results are empty or have errors
         if not results or results.get('error'):
@@ -314,7 +314,6 @@ def run_analysis(symbol, max_iterations, news_limit, api_key, config_data=None, 
         progress_bar.progress(90)
         
         # Store results in session state
-        st.session_state.key_findings = key_findings
         st.session_state.analysis_results = results
         st.session_state.symbol = symbol
         st.session_state.analysis_time = datetime.now()
@@ -516,7 +515,7 @@ def display_main_dashboard(results, symbol):
     evaluation = results.get('evaluation', {})
     processed_items = results.get('processed_items', [])
     signals = results.get('signals', {})
-    key_finding=st.session_state.key_findings
+    key_finding=analysis.get('key_findings', [])
 
     # Main KPI Row
     st.markdown("### 🎯 Key Performance Indicators")
@@ -524,7 +523,7 @@ def display_main_dashboard(results, symbol):
     col1, col2, col3, col4, col5 = st.columns(5)
     
     with col1:
-        overall_score = analysis.get('overall_score', 0)
+        overall_score = analysis.get('overall_score', 0.0)
         sentiment = analysis.get('sentiment', 'neutral')
         sentiment_color = {'positive': '🟢', 'negative': '🔴', 'neutral': '🟡'}.get(sentiment, '⚪')
         st.metric("Overall Sentiment", f"{sentiment_color} {sentiment.title()}", f"{overall_score:.2f}")
